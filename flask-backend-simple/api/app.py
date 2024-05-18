@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import db
 from flask_cors import CORS
 
 from model.company import (
@@ -28,7 +27,7 @@ def list_companies():
     return jsonify(retorno)
 
 @app.route('/companies/<int:company_id>', methods=['GET'])
-def get_company(company_id):
+def get_company_by_id(company_id):
     return jsonify(get_company(company_id))
 
 @app.route('/companies/by_name/<company_name>', methods=['GET'])
