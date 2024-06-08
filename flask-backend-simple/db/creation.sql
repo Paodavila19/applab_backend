@@ -14,27 +14,50 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Table `companies`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `companies` ;
+DROP TABLE IF EXISTS `pacientes` ;
 
-CREATE TABLE IF NOT EXISTS `companies` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
-  `description` TEXT NULL,
-  PRIMARY KEY (`id`))
+CREATE TABLE IF NOT EXISTS `pacientes` (
+  `id_paciente` INT NOT NULL AUTO_INCREMENT,
+  `tipo_id` VARCHAR(45) NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `tipo_sangre` VARCHAR(45) NOT NULL,
+  `genero` VARCHAR(45) NOT NULL,
+  `edad` INT NOT NULL,
+  `fecha_nacimiento` DATE NOT NULL,
+  `dir` VARCHAR(45) NOT NULL,
+  `celular` INT NOT NULL,
+  `eps` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_paciente`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
-  `lastname` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`))
+CREATE TABLE IF NOT EXISTS `registros` (
+  `id_registro` INT NOT NULL AUTO_INCREMENT,
+  `id_paciente` INT NOT NULL,
+  `personal` VARCHAR(45) NOT NULL,
+  `cargo` VARCHAR(45) NOT NULL,
+  `prueba` VARCHAR(45) NOT NULL,
+  `valor_resultado` FLOAT NOT NULL,
+  `unidad_resultado` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_registro`))
 ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-INSERT INTO companies(name, description) VALUES('Company 1','My company');
-INSERT INTO companies(name, description) VALUES('Company 2','Another company');
-INSERT INTO users(name, lastname) VALUES('Lucas','Perez');
-INSERT INTO users(name, lastname) VALUES('Luisa','Giraldo');
+INSERT INTO pacientes(tipo_id, nombre, email, tipo_sangre, genero, edad, fecha_nacimiento, dir, celular, eps) 
+VALUES
+('CC','Maria Rubio','mariarubio@gmail.com','O+','Femenino',19,'2005-04-15','calle 0',444444,'sanitas'),
+('TI','Tomas Cardona','tomascardona@gmail.com','B+','Masculino',16,'2008-09-21','calle 0',333333,'sura'),
+('CC','Alberto Vargas','albertovargas@gmail.com','O-','Masculino',54,'1970-09-21','calle 0',111111,'nueva eps'),
+('CC','Gloria Hurtado','gloriahurtado@gmail.com','B+','Femenino',45,'1979-08-14','calle 0',222222,'compensar');
+
+INSERT INTO registros (id_paciente, personal, cargo, prueba, valor_resultado, unidad_resultado)
+VALUES
+  (1,'Andrea Cardenas','Bacteriologa','Hemoglobina',16.22,'g/dL'),
+  (2,'Javier Garcia','Patologo','VCM', 89.8,'fL'),
+  (3,'Maria Ortega','Tecnica','Recuento de Globulos', 5.35,'Mill/uL'),
+  (4,'Camilo Pachon','Bacteriologo','TSH',6.3,'UI/ml'),
+  (5,'Laura Henao','Patologa','FT4',2.3,'ng/dL'),
+  (6,'Julian Rendon','Tecnico','Neutrofilos %',42,'%');
